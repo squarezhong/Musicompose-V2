@@ -13,6 +13,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.anafthdev.musicompose2.R
@@ -57,8 +58,6 @@ fun MainScreen(
 	
 	val scope = rememberCoroutineScope()
 	val pagerState = rememberPagerState()
-	
-	var isMoreOptionPopupShowed by remember { mutableStateOf(false) }
 	
 	val scrollToPage: (Int) -> Unit = { page ->
 		scope.launch { pagerState.animateScrollToPage(page) }
@@ -109,46 +108,26 @@ fun MainScreen(
 					
 					IconButton(
 						onClick = {
-							isMoreOptionPopupShowed = !isMoreOptionPopupShowed
+							scope.launch {
+								songController?.hideBottomMusicPlayer()
+								delay(400)
+								navController.navigate(
+									MusicomposeDestination.BottomSheet.Sort.createRoute(
+										type = when (pagerState.currentPage) {
+											0 -> SortType.SONG
+											1 -> SortType.ALBUM
+											2 -> SortType.ARTIST
+											3 -> SortType.PLAYLIST
+											else -> SortType.SONG
+										}
+									)
+								)
+							}
 						}
 					) {
 						Icon(
-							imageVector = Icons.Rounded.MoreVert,
-							contentDescription = null
-						)
-					}
-					
-					if (isMoreOptionPopupShowed) {
-						MoreOptionPopup(
-							options = listOf(
-								stringResource(id = R.string.sort_by)
-							),
-							onDismissRequest = {
-								isMoreOptionPopupShowed = false
-							},
-							onClick = { i ->
-								when (i) {
-									0 -> {
-										scope.launch {
-											songController?.hideBottomMusicPlayer()
-											delay(800)
-											navController.navigate(
-												MusicomposeDestination.BottomSheet.Sort.createRoute(
-													type = when (pagerState.currentPage) {
-														0 -> SortType.SONG
-														1 -> SortType.ALBUM
-														2 -> SortType.ARTIST
-														3 -> SortType.PLAYLIST
-														else -> SortType.SONG
-													}
-												)
-											)
-										}
-									}
-								}
-							},
-							modifier = Modifier
-								.padding(8.dp)
+							painter = painterResource(id = R.drawable.sort),
+							contentDescription = "sort icon"
 						)
 					}
 				}
