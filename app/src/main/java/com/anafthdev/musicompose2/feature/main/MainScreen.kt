@@ -4,7 +4,6 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.MoreVert
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -13,11 +12,10 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.anafthdev.musicompose2.R
-import com.anafthdev.musicompose2.data.MusicomposeDestination
+import com.anafthdev.musicompose2.data.Destination
 import com.anafthdev.musicompose2.data.PlaylistOption
 import com.anafthdev.musicompose2.data.SortType
 import com.anafthdev.musicompose2.feature.album.album_list.AlbumListScreen
@@ -32,7 +30,6 @@ import com.anafthdev.musicompose2.foundation.theme.black01
 import com.anafthdev.musicompose2.foundation.theme.black10
 import com.anafthdev.musicompose2.foundation.theme.circle
 import com.anafthdev.musicompose2.foundation.uicomponent.BottomMusicPlayerImpl
-import com.anafthdev.musicompose2.foundation.uicomponent.MoreOptionPopup
 import com.anafthdev.musicompose2.foundation.uimode.data.LocalUiMode
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
@@ -85,7 +82,7 @@ fun MainScreen(
 				navigationIcon = {
 					IconButton(
 						onClick = {
-							navController.navigate(MusicomposeDestination.Setting.route)
+							navController.navigate(Destination.Setting.route)
 						}
 					) {
 						Icon(
@@ -97,7 +94,7 @@ fun MainScreen(
 				actions = {
 					IconButton(
 						onClick = {
-							navController.navigate(MusicomposeDestination.Search.route)
+							navController.navigate(Destination.Search.route)
 						}
 					) {
 						Icon(
@@ -112,7 +109,7 @@ fun MainScreen(
 								songController?.hideBottomMusicPlayer()
 								delay(400)
 								navController.navigate(
-									MusicomposeDestination.BottomSheet.Sort.createRoute(
+									Destination.BottomSheet.Sort.createRoute(
 										type = when (pagerState.currentPage) {
 											0 -> SortType.SONG
 											1 -> SortType.ALBUM
@@ -186,7 +183,7 @@ fun MainScreen(
 								songController?.hideBottomMusicPlayer()
 								delay(800)
 								navController.navigate(
-									MusicomposeDestination.BottomSheet.Playlist.createRoute(
+									Destination.BottomSheet.Playlist.createRoute(
 										option = PlaylistOption.NEW
 									)
 								)

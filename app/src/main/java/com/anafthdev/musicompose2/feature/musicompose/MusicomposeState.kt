@@ -14,6 +14,7 @@ data class MusicomposeState(
 	val currentSongPlayed: Song = Song.default,
 	val currentDuration: Long = 0,
 	val isPlaying: Boolean = false,
+	val isLyricsShowed: Boolean = false,
 	val isShuffled: Boolean = false,
 	val isBottomMusicPlayerShowed: Boolean = false,
 	val playbackMode: PlaybackMode = PlaybackMode.REPEAT_OFF,

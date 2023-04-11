@@ -14,7 +14,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.anafthdev.musicompose2.data.MusicomposeDestination
+import com.anafthdev.musicompose2.data.Destination
 import com.anafthdev.musicompose2.data.PlaylistOption
 import com.anafthdev.musicompose2.data.SongSelectorType
 import com.anafthdev.musicompose2.data.SortType
@@ -79,36 +79,36 @@ fun MusicomposeNavHost(
 	) {
 		NavHost(
 			navController = navController,
-			startDestination = MusicomposeDestination.Main.route,
+			startDestination = Destination.Main.route,
 			modifier = Modifier
 				.fillMaxSize()
 		) {
-			composable(MusicomposeDestination.Main.route) {
+			composable(Destination.Main.route) {
 				MainScreen(navController = navController)
 			}
 			
-			composable(MusicomposeDestination.Search.route) {
+			composable(Destination.Search.route) {
 				SearchScreen(navController = navController)
 			}
 			
-			composable(MusicomposeDestination.Setting.route) {
+			composable(Destination.Setting.route) {
 				SettingScreen(navController = navController)
 			}
 			
-			composable(MusicomposeDestination.Language.route) {
+			composable(Destination.Language.route) {
 				LanguageScreen(navController = navController)
 			}
 			
-			composable(MusicomposeDestination.Theme.route) {
+			composable(Destination.Theme.route) {
 				ThemeScreen(navController = navController)
 			}
 			
-			composable(MusicomposeDestination.ScanOptions.route) {
+			composable(Destination.ScanOptions.route) {
 				ScanOptionsScreen(navController = navController)
 			}
 			
 			composable(
-				route = MusicomposeDestination.Album.route,
+				route = Destination.Album.route,
 				arguments = listOf(
 					navArgument(
 						name = "albumID"
@@ -126,7 +126,7 @@ fun MusicomposeNavHost(
 			}
 			
 			composable(
-				route = MusicomposeDestination.Artist.route,
+				route = Destination.Artist.route,
 				arguments = listOf(
 					navArgument(
 						name = "artistID"
@@ -144,7 +144,7 @@ fun MusicomposeNavHost(
 			}
 			
 			composable(
-				route = MusicomposeDestination.Playlist.route,
+				route = Destination.Playlist.route,
 				arguments = listOf(
 					navArgument(
 						name = "playlistID"
@@ -162,7 +162,7 @@ fun MusicomposeNavHost(
 			}
 			
 			composable(
-				route = MusicomposeDestination.SongSelector.route,
+				route = Destination.SongSelector.route,
 				arguments = listOf(
 					navArgument(
 						name = "type"
@@ -186,7 +186,7 @@ fun MusicomposeNavHost(
 				)
 			}
 			
-			bottomSheet(MusicomposeDestination.BottomSheet.MusicPlayer.route) {
+			bottomSheet(Destination.BottomSheet.MusicPlayer.route) {
 				
 				bottomSheetLayoutConfig = bottomSheetLayoutConfig.copy(
 					sheetBackgroundColor = MaterialTheme.colorScheme.background
@@ -199,7 +199,7 @@ fun MusicomposeNavHost(
 			}
 			
 			bottomSheet(
-				route = MusicomposeDestination.BottomSheet.Sort.route,
+				route = Destination.BottomSheet.Sort.route,
 				arguments = listOf(
 					navArgument(
 						name = "type"
@@ -221,7 +221,7 @@ fun MusicomposeNavHost(
 			}
 			
 			bottomSheet(
-				route = MusicomposeDestination.BottomSheet.Playlist.route,
+				route = Destination.BottomSheet.Playlist.route,
 				arguments = listOf(
 					navArgument(
 						name = "option"
@@ -250,7 +250,7 @@ fun MusicomposeNavHost(
 			}
 			
 			bottomSheet(
-				route = MusicomposeDestination.BottomSheet.DeletePlaylist.route,
+				route = Destination.BottomSheet.DeletePlaylist.route,
 				arguments = listOf(
 					navArgument(
 						name = "playlistID"

@@ -13,7 +13,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.anafthdev.musicompose2.data.MusicomposeDestination
+import com.anafthdev.musicompose2.data.Destination
 import com.anafthdev.musicompose2.data.model.Artist
 import com.anafthdev.musicompose2.foundation.uicomponent.ArtistItem
 import com.anafthdev.musicompose2.foundation.uicomponent.BottomMusicPlayerDefault
@@ -41,7 +41,7 @@ fun ArtistListScreen(
 				artist = artist,
 				onClick = {
 					navController.navigate(
-						MusicomposeDestination.Artist.createRoute(
+						Destination.Artist.createRoute(
 							artist.id
 						)
 					)

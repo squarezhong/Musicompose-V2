@@ -115,7 +115,7 @@ fun SongSelectorItem(
 				} else {
 					Image(
 						painter = painterResource(
-							id = if (it) R.drawable.ic_favorite_selected else R.drawable.ic_favorite_unselected
+							id = if (it) R.drawable.heart_minus else R.drawable.heart_plus
 						),
 						contentDescription = null
 					)

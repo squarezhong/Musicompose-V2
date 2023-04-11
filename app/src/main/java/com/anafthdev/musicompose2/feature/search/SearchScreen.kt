@@ -29,7 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.anafthdev.musicompose2.R
-import com.anafthdev.musicompose2.data.MusicomposeDestination
+import com.anafthdev.musicompose2.data.Destination
 import com.anafthdev.musicompose2.data.model.Album
 import com.anafthdev.musicompose2.data.model.Song
 import com.anafthdev.musicompose2.feature.musicompose.LocalMusicomposeState
@@ -62,7 +62,7 @@ fun SearchScreen(
 	val searchTextFieldFocusRequester = remember { FocusRequester() }
 	
 	LaunchedEffect(currentRoute) {
-		if (currentRoute == MusicomposeDestination.Search.route) {
+		if (currentRoute == Destination.Search.route) {
 			searchTextFieldFocusRequester.requestFocus()
 		}
 	}
@@ -282,7 +282,7 @@ fun SearchScreen(
 						IconButton(
 							onClick = {
 								navController.navigate(
-									MusicomposeDestination.Artist.createRoute(
+									Destination.Artist.createRoute(
 										artistID = artist.id
 									)
 								)
@@ -345,7 +345,7 @@ fun SearchScreen(
 						album = album,
 						onClick = {
 							navController.navigate(
-								MusicomposeDestination.Album.createRoute(
+								Destination.Album.createRoute(
 									albumID = album.id
 								)
 							)

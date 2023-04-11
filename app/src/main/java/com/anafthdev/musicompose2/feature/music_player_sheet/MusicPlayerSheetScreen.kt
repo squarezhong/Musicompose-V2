@@ -45,7 +45,7 @@ import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.anafthdev.musicompose2.R
-import com.anafthdev.musicompose2.data.MusicomposeDestination
+import com.anafthdev.musicompose2.data.Destination
 import com.anafthdev.musicompose2.data.PlaybackMode
 import com.anafthdev.musicompose2.data.SkipForwardBackward
 import com.anafthdev.musicompose2.data.model.Playlist
@@ -84,7 +84,7 @@ fun MusicPlayerSheetScreen(
 	val viewModel = hiltViewModel<MusicPlayerSheetViewModel>()
 	
 	val state by viewModel.state.collectAsState()
-	
+
 	val scope = rememberCoroutineScope()
 	val scaffoldState = rememberBottomSheetScaffoldState(
 		bottomSheetState = rememberBottomSheetState(initialValue = BottomSheetValue.Collapsed)
@@ -121,14 +121,14 @@ fun MusicPlayerSheetScreen(
 		},
 		onAlbumClicked = {
 			navController.navigate(
-				MusicomposeDestination.Album.createRoute(
+				Destination.Album.createRoute(
 					musicomposeState.currentSongPlayed.albumID
 				)
 			)
 		},
 		onArtistClicked = {
 			navController.navigate(
-				MusicomposeDestination.Artist.createRoute(
+				Destination.Artist.createRoute(
 					musicomposeState.currentSongPlayed.artistID
 				)
 			)
@@ -175,10 +175,17 @@ fun MusicPlayerSheetScreen(
 			state = scaffoldState
 		) {
 			MotionContent(
+				navController = navController,
 				musicomposeState = musicomposeState,
 				fraction = scaffoldState.currentFraction,
 				background = bottomSheetLayoutConfig.sheetBackgroundColor,
 				onMoreClicked = {
+					scope.launch {
+						moreOptionSheetState.show()
+					}
+				},
+				onAddToLibraryClicked = {
+					moreOptionType = MoreOptionMusicPlayerSheetType.ADD_TO_PLAYLIST
 					scope.launch {
 						moreOptionSheetState.show()
 					}
@@ -360,10 +367,10 @@ fun SongControlButtons(
 fun OtherButtons(
 	musicomposeState: MusicomposeState,
 	modifier: Modifier = Modifier,
+	onLyricsClicked: () -> Unit,
 	onPlaybackModeClicked: () -> Unit,
 	onFavoriteClicked: () -> Unit,
-	onBackwardClicked: () -> Unit,
-	onForwardClicked: () -> Unit,
+	onAddToLibraryClicked: () -> Unit,
 	onShuffleClicked: () -> Unit
 ) {
 	
@@ -373,16 +380,12 @@ fun OtherButtons(
 		modifier = modifier
 	) {
 		IconButton(
-			onClick = onBackwardClicked
+			onClick = onLyricsClicked
 		) {
 			Icon(
 				painter = painterResource(
-					id = when (musicomposeState.skipForwardBackward) {
-						SkipForwardBackward.FIVE_SECOND -> R.drawable.ic_backward_5_sec
-						SkipForwardBackward.TEN_SECOND -> R.drawable.ic_backward_10_sec
-						SkipForwardBackward.FIFTEEN_SECOND -> R.drawable.ic_backward_15_sec
-					}
-				),
+					id = if (musicomposeState.isLyricsShowed) R.drawable.lyrics_fill
+				else R.drawable.lyrics_blank),
 				contentDescription = null
 			)
 		}
@@ -412,8 +415,8 @@ fun OtherButtons(
 		) {
 			Image(
 				painter = painterResource(
-					id = if (musicomposeState.currentSongPlayed.isFavorite) R.drawable.ic_favorite_selected
-					else R.drawable.ic_favorite_unselected
+					id = if (musicomposeState.currentSongPlayed.isFavorite) R.drawable.heart_minus
+					else R.drawable.heart_plus
 				),
 				contentDescription = null
 			)
@@ -434,16 +437,10 @@ fun OtherButtons(
 		}
 		
 		IconButton(
-			onClick = onForwardClicked
+			onClick = onAddToLibraryClicked // same to add to playlist, just prevent confusion
 		) {
 			Icon(
-				painter = painterResource(
-					id = when (musicomposeState.skipForwardBackward) {
-						SkipForwardBackward.FIVE_SECOND -> R.drawable.ic_forward_5_sec
-						SkipForwardBackward.TEN_SECOND -> R.drawable.ic_forward_10_sec
-						SkipForwardBackward.FIFTEEN_SECOND -> R.drawable.ic_forward_15_sec
-					}
-				),
+				painter = painterResource(id = R.drawable.library_add),
 				contentDescription = null
 			)
 		}
@@ -453,11 +450,13 @@ fun OtherButtons(
 @OptIn(ExperimentalMotionApi::class)
 @Composable
 private fun MotionContent(
+	navController : NavController,
 	fraction: Float,
 	background: Color,
 	musicomposeState: MusicomposeState,
 	modifier: Modifier = Modifier,
-	onMoreClicked: () -> Unit
+	onMoreClicked: () -> Unit,
+	onAddToLibraryClicked: () -> Unit
 ) {
 	
 	val context = LocalContext.current
@@ -625,12 +624,10 @@ private fun MotionContent(
 							)
 						)
 					},
-					onBackwardClicked = {
-						songController?.backward()
+					onLyricsClicked = {
+						// TODO: show lyrics
 					},
-					onForwardClicked = {
-						songController?.forward()
-					},
+					onAddToLibraryClicked = onAddToLibraryClicked,
 					onShuffleClicked = {
 						songController?.setShuffled(!musicomposeState.isShuffled)
 					},
@@ -671,7 +668,7 @@ fun MoreOptionSheet(
 					AddToPlaylistSheetScreen(
 						playlists = state.playlists,
 						onBack = onBack,
-						onPlaylistClicked = onPlaylistClicked
+						onPlaylistClicked = onPlaylistClicked,
 					)
 				}
 				MoreOptionMusicPlayerSheetType.SET_TIMER -> {
@@ -702,7 +699,7 @@ fun MoreOptionSheet(
 fun AddToPlaylistSheetScreen(
 	playlists: List<Playlist>,
 	onBack: () -> Unit,
-	onPlaylistClicked: (Playlist) -> Unit
+	onPlaylistClicked: (Playlist) -> Unit,
 ) {
 
 	Column(

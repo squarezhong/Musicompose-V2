@@ -19,7 +19,7 @@ import androidx.compose.ui.zIndex
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.anafthdev.musicompose2.R
-import com.anafthdev.musicompose2.data.MusicomposeDestination
+import com.anafthdev.musicompose2.data.Destination
 import com.anafthdev.musicompose2.data.SkipForwardBackward
 import com.anafthdev.musicompose2.foundation.extension.isInDarkTheme
 import com.anafthdev.musicompose2.foundation.extension.isInLightTheme
@@ -143,16 +143,16 @@ fun SettingScreen(
 				onClick = { preference ->
 					when (preference.key) {
 						preferences[0].key -> {
-							navController.navigate(MusicomposeDestination.Language.route)
+							navController.navigate(Destination.Language.route)
 						}
 						preferences[1].key -> {
-							navController.navigate(MusicomposeDestination.Theme.route)
+							navController.navigate(Destination.Theme.route)
 						}
 						preferences[2].key -> {
 							showSkipForwardBackwardPopup = true
 						}
 						preferences[3].key -> {
-							navController.navigate(MusicomposeDestination.ScanOptions.route)
+							navController.navigate(Destination.ScanOptions.route)
 						}
 					}
 				}

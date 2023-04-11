@@ -31,7 +31,7 @@ import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.anafthdev.musicompose2.R
-import com.anafthdev.musicompose2.data.MusicomposeDestination
+import com.anafthdev.musicompose2.data.Destination
 import com.anafthdev.musicompose2.data.PlaylistOption
 import com.anafthdev.musicompose2.data.SongSelectorType
 import com.anafthdev.musicompose2.data.model.Playlist
@@ -185,7 +185,7 @@ fun PlaylistScreen(
 											songController?.hideBottomMusicPlayer()
 											delay(800)
 											navController.navigate(
-												MusicomposeDestination.BottomSheet.Playlist.createRoute(
+												Destination.BottomSheet.Playlist.createRoute(
 													option = PlaylistOption.EDIT,
 													playlistID = state.playlist.id
 												)
@@ -229,7 +229,7 @@ fun PlaylistScreen(
 											songController?.hideBottomMusicPlayer()
 											delay(800)
 											navController.navigate(
-												MusicomposeDestination.BottomSheet.DeletePlaylist.createRoute(
+												Destination.BottomSheet.DeletePlaylist.createRoute(
 													playlistID = state.playlist.id
 												)
 											)
@@ -315,13 +315,13 @@ fun PlaylistScreen(
 						onClick = {
 							when (state.playlist.id) {
 								Playlist.favorite.id -> navController.navigate(
-									MusicomposeDestination.SongSelector.createRoute(
+									Destination.SongSelector.createRoute(
 										type = SongSelectorType.ADD_FAVORITE_SONG,
 										playlistID = state.playlist.id
 									)
 								)
 								else -> navController.navigate(
-									MusicomposeDestination.SongSelector.createRoute(
+									Destination.SongSelector.createRoute(
 										type = SongSelectorType.ADD_SONG,
 										playlistID = state.playlist.id
 									)
@@ -374,13 +374,13 @@ fun PlaylistScreen(
 								when (state.playlist.id) {
 									Playlist.justPlayed.id -> R.string.play_song
 									Playlist.favorite.id -> navController.navigate(
-										MusicomposeDestination.SongSelector.createRoute(
+										Destination.SongSelector.createRoute(
 											type = SongSelectorType.ADD_FAVORITE_SONG,
 											playlistID = state.playlist.id
 										)
 									)
 									else -> navController.navigate(
-										MusicomposeDestination.SongSelector.createRoute(
+										Destination.SongSelector.createRoute(
 											type = SongSelectorType.ADD_SONG,
 											playlistID = state.playlist.id
 										)

@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.anafthdev.musicompose2.R
-import com.anafthdev.musicompose2.data.MusicomposeDestination
+import com.anafthdev.musicompose2.data.Destination
 import com.anafthdev.musicompose2.foundation.theme.Inter
 
 @Composable
@@ -67,7 +67,7 @@ fun DeletePlaylistScreen(
 				)
 				
 				navController.popBackStack(
-					route = MusicomposeDestination.Main.route,
+					route = Destination.Main.route,
 					inclusive = false
 				)
 			},

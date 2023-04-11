@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.anafthdev.musicompose2.data.MusicomposeDestination
+import com.anafthdev.musicompose2.data.Destination
 import com.anafthdev.musicompose2.data.model.Playlist
 import com.anafthdev.musicompose2.data.model.Song
 import com.anafthdev.musicompose2.feature.musicompose.LocalMusicomposeState
@@ -73,7 +73,7 @@ fun PlaylistListScreen(
 					songs = songs,
 					onClick = {
 						navController.navigate(
-							MusicomposeDestination.Playlist.createRoute(
+							Destination.Playlist.createRoute(
 								playlistID = playlist.id
 							)
 						)

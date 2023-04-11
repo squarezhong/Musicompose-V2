@@ -10,7 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
-import com.anafthdev.musicompose2.data.MusicomposeDestination
+import com.anafthdev.musicompose2.data.Destination
 import com.anafthdev.musicompose2.feature.musicompose.LocalMusicomposeState
 import com.anafthdev.musicompose2.foundation.common.LocalSongController
 import com.anafthdev.musicompose2.foundation.extension.isNotDefault
@@ -44,14 +44,15 @@ fun BoxScope.BottomMusicPlayerImpl(
 			onClick = {
 				if (musicomposeState.currentSongPlayed.isNotDefault()) {
 					navController.navigate(
-						MusicomposeDestination.BottomSheet.MusicPlayer.route
+						Destination.BottomSheet.MusicPlayer.route
 					)
 				}
 			},
-			onFavoriteClicked = {
+			onFavoriteClicked = { isFavorite ->
 				songController?.updateSong(
 					musicomposeState.currentSongPlayed.copy(
-						isFavorite = !musicomposeState.currentSongPlayed.isFavorite
+						isFavorite = isFavorite
+						//isFavorite = !musicomposeState.currentSongPlayed.isFavorite
 					)
 				)
 			},
